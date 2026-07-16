@@ -1,0 +1,91 @@
+body {
+    background-color: black;
+    margin: 0;
+}
+
+#headline {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
+    color: cornsilk;
+    font-family: Arial;
+    font-size: 2.5em;
+
+    text-align: center;
+}
+
+#headline2 {
+    text-align: center;
+    color: white;
+}
+
+#mainbox {
+    text-align: center;
+    position: absolute;
+    top: 60%;
+    width: 100%;
+}
+
+#messagelabel {
+    font-size: 2em;
+    font-weight: bold;
+    color: darksalmon;
+}
+
+#inputmessage {
+    margin-bottom: 10px;
+    width: 250px;
+    max-width: 80%;
+}
+
+.Controlbuttons {
+    font-size: 2.5em;
+    width: 50px;
+    height: 50px;
+    transition-duration: 0.25s;
+}
+
+#btnforwards {
+    margin-bottom: 50px;
+}
+
+#btnbackwards {
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+#motorcontrols {
+    text-align: center;
+    width: fit-content;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    background-color: #111;
+
+    padding: 10px;
+
+    box-shadow: 5px 5px 10px rgb(46, 10, 10);
+}
+
+#statusdot {
+    display: inline-block;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background-color: greenyellow;
+
+    box-shadow: 0 0 10px greenyellow;
+}
+
+#inputmessage::placeholder {
+    text-align: center;
+}
+.Controlbuttons:hover{
+    background-color: greenyellow;
+}
