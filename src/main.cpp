@@ -5,8 +5,8 @@
 #include <LittleFS.h>
 #include <ArduinoJson.h>
 #include <LiquidCrystal.h>
-const char* ssid = SSID;
-const char* password = PASSWORD;
+const char* ssid = SSID_secret;
+const char* password = PASSWORD_secret;
 const char* api="generativelanguage.googleapis.com";
 const char* certificate=R"EOF(-----BEGIN CERTIFICATE-----
 MIIFCzCCAvOgAwIBAgIQf/AFoHxM3tEArZ1mpRB7mDANBgkqhkiG9w0BAQsFADBH
@@ -37,11 +37,13 @@ Y/cykHipa+te1pOhv7wYPYtZ9orGBV5SGOJm4NrB3K1aJar0RfzxC3ikr7Dyc6Qw
 qDTBU39CluVIQeuQRgwG3MuSxl7zRERDRilGoKb8uY45JzmxWuKxrfwT/478JuHU
 /oTxUFqOl2stKnn7QGTq8z29W+GgBLCXSBxC9epaHM0myFH/FJlniXJfHeytWt0=
 -----END CERTIFICATE-----)EOF";
-String apikey=APIKEY;
+String apikey=APIKEY_secret;
 WiFiServer server(80);
 WiFiClient clientbefore;
 WiFiClientSecure aiclient;
 LiquidCrystal lcd(19,18,17,16,26,27);
+int ledleft=14;
+int ledright=25;
 class webpage{
   public:
   String newstring="";
@@ -107,6 +109,8 @@ void setup(){
   Serial.println(WiFi.localIP());
   server.begin();
   aiclient.setCACert(certificate);
+  pinMode(ledleft,OUTPUT);
+  pinMode(ledright,OUTPUT);
  
 }
 void loop(){
@@ -128,6 +132,24 @@ void loop(){
     else if (request.indexOf("GET /script.js")!=-1){
       Serial.println("Writing Js");
       page.Initializejs();
+    }
+    else if(request.indexOf("GET /movedright")!=-1){
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("YOU MOVED RIGHT");
+      digitalWrite(ledright,HIGH);
+      digitalWrite(ledleft,LOW);
+      clientbefore.println("HTTP/1.1 200 OK");
+      clientbefore.println("Access-Control-Allow-Origin: *");
+    }
+    else if(request.indexOf("GET /movedleft")!=-1){
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("YOU MOVED LEFT");
+      digitalWrite(ledleft,HIGH);
+      digitalWrite(ledright,LOW);
+      clientbefore.println("HTTP/1.1 200 OK");
+      clientbefore.println("Access-Control-Allow-Origin: *"); 
     }
     if(request.indexOf("GET /chat?msg=")!=-1){
       String response="";

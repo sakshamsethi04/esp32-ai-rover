@@ -89,3 +89,6 @@ body {
 .Controlbuttons:hover{
     background-color: greenyellow;
 }
+#canvas{
+    display: none;
+}
