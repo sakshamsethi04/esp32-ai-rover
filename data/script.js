@@ -13,7 +13,7 @@ cam.srcObject=stream
 cam.onloadedmetadata=function(){
     canvas.width=cam.videoWidth;
     canvas.height=cam.videoHeight;
-    setInterval(Detectblack,2000);
+    setInterval(Detectblack,50);
 
 }
 }
@@ -31,7 +31,7 @@ for(let i =0; i<image.data.length; i+=4){
     const b=image.data[i+2]
     let pixel=i/4;
     
-    if(r<30 && g<30 && b<30){
+    if (r > 100 &&r > g + 50 &&r > b + 50){
         let y=Math.floor(pixel/canvas.width);
         let x=pixel%canvas.width;
         coords_black.push([x,y]);
@@ -49,6 +49,14 @@ for(let i=0; i<coords_black.length; i++){
 }
 let Avgx=Sumx/coords_black.length;
 let Avgy=Sumy/coords_black.length;
+ctx.beginPath();
+ctx.arc(Avgx, Avgy, 8, 0, 2 * Math.PI);
+ctx.fillStyle = "yellow";
+ctx.fill();
+
+ctx.strokeStyle = "white";
+ctx.lineWidth = 2;
+ctx.stroke();
 if(Prevx==null){
     Prevx=Avgx
     return;
@@ -56,10 +64,18 @@ if(Prevx==null){
 if(Avgx-Prevx>10){
     Prevx=Avgx;
     fetch("http://192.168.1.5/movedleft");
+    ctx.fillStyle = "black";
+    ctx.font = "bold 50px Arial";
+    ctx.fillText("you moved left", 20, 30);
+
 }
 else if(Avgx-Prevx<-10){
     Prevx=Avgx
     fetch("http://192.168.1.5/movedright");
+    ctx.fillStyle = "black";
+    ctx.font = "bold 50px Arial";
+    ctx.fillText("you moved right", 20, 30);
+
 }
 }
 
